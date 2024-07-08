@@ -84,7 +84,7 @@ def plot_bar_chart(N):
     df = pd.read_sql('SELECT * FROM food', conn)
     conn.close()
     most_expensive = df.nlargest(N, 'price')
-    plt.figure(figsize=(10, 7))
+    plt.figure(figsize=(7, 10))
     bars = plt.barh(most_expensive['food'], most_expensive['price'], color='blue')
     plt.xlabel('Price')
     plt.ylabel('Food')
