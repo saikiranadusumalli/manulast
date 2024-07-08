@@ -94,7 +94,7 @@ def plot_bar_chart(N):
     plt.title(f"Top {N} Most Expensive Foods (Reversed)")
     
     for bar in bars:
-        plt.text(bar.get_width() - bar.get_width() * 0.5, bar.get_y() + bar.get_height()/2, f'{bar.get_width()}', ha='right', va='center', color='white')
+        plt.text(bar.get_width() + 1, bar.get_y() + bar.get_height()/2, f'{bar.get_width():.2f}', ha='left', va='center', color='black')
     
     plt.savefig('static/bar_chart.png')
     plt.close()
