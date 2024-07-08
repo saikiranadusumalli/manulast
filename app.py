@@ -85,21 +85,24 @@ def plot_bar_chart(N):
     conn.close()
     
     most_expensive = df.nlargest(N, 'price')
-    most_expensive = most_expensive[::-1]  # Reverse the dataframe order
     
-    plt.figure(figsize=(10, 7))
-    bars = plt.barh(most_expensive['food'], most_expensive['price'], color='red')
-    plt.xlabel('Price')
-    plt.ylabel('Food')
-    plt.title(f"Top {N} Most Expensive Foods (Reversed)")
+    # Reverse the dataframe order
+    most_expensive = most_expensive[::-1]
     
-    for bar in bars:
-        plt.text(bar.get_width() + 1, bar.get_y() + bar.get_height()/2, f'{bar.get_width():.2f}', ha='left', va='center', color='black')
+    # Create a mirrored effect for the bar chart with 90-degree rotation
+    plt.figure(figsize=(13, 7))
+    bars = plt.bar(np.arange(len(most_expensive)), most_expensive['price'], color='red')  # Change bar color to red
+    plt.ylabel('Price')
+    plt.xticks(np.arange(len(most_expensive)), most_expensive['food'], rotation=90)  # Rotate labels 90 degrees
+    plt.title(f"Top {N} Most Expensive Foods (Mirrored)")
     
-    plt.savefig('static/bar_chart.png')
+    for i, bar in enumerate(bars):
+        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, f'{bar.get_height():.2f}', ha='center', va='bottom', color='black')  # Position text above each bar
+    
+    plt.savefig('static/mirrored_bar_chart.png')
     plt.close()
     
-    return render_template('plot.html', plot_url='bar_chart.png')
+    return render_template('plot.html', plot_url='mirrored_bar_chart.png')
 
 @app.route('/points', methods=['GET'])
 def get_points():
