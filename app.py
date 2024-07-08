@@ -90,7 +90,7 @@ def plot_bar_chart(N):
     most_expensive = most_expensive[::-1]
     
     # Create a mirrored effect for the bar chart with 90-degree rotation
-    plt.figure(figsize=(13, 7))
+    plt.figure(figsize=(10, 7))
     bars = plt.bar(np.arange(len(most_expensive)), most_expensive['price'], color='red')  # Change bar color to red
     plt.ylabel('Price')
     plt.xticks(np.arange(len(most_expensive)), most_expensive['food'], rotation=90)  # Rotate labels 90 degrees
