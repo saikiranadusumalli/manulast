@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, render_template
 import pyodbc
-import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -78,19 +77,23 @@ def plot_pie_chart(N):
     plt.close()
     return render_template('plot.html', plot_url='pie_chart.png')
 
-@app.route('/plot_bar_chart/<int:N>')
+@app.route('/plot_bar_chart/<int=N>')
 def plot_bar_chart(N):
     conn = get_db_connection()
     df = pd.read_sql('SELECT * FROM food', conn)
     conn.close()
     most_expensive = df.nlargest(N, 'price')
+    
+    # Reverse the order of the data
+    most_expensive = most_expensive[::-1]
+    
     plt.figure(figsize=(7, 10))
     bars = plt.barh(most_expensive['food'], most_expensive['price'], color='blue')
     plt.xlabel('Price')
     plt.ylabel('Food')
     plt.title(f"Top {N} Most Expensive Foods")
     for bar in bars:
-        plt.text(bar.get_width() - bar.get_width() * 0.5, bar.get_y() + bar.get_height()/2, f'{bar.get_width()}', ha='center', va='center', color='white')
+        plt.text(bar.get_width() - bar.get_width() * 0.5, bar.get_y() + bar.get_height() / 2, f'{bar.get_width()}', ha='center', va='center', color='white')
     plt.savefig('static/bar_chart.png')
     plt.close()
     return render_template('plot.html', plot_url='bar_chart.png')
