@@ -88,13 +88,13 @@ def plot_bar_chart(N):
     most_expensive = most_expensive[::-1]  # Reverse the dataframe order
     
     plt.figure(figsize=(10, 7))
-    bars = plt.barh(most_expensive['food'], most_expensive['price'], color='blue')
+    bars = plt.barh(most_expensive['food'], most_expensive['price'], color='red')
     plt.xlabel('Price')
     plt.ylabel('Food')
     plt.title(f"Top {N} Most Expensive Foods (Reversed)")
     
     for bar in bars:
-        plt.text(bar.get_width() - bar.get_width() * 0.5, bar.get_y() + bar.get_height()/2, f'{bar.get_width()}', ha='center', va='center', color='white')
+        plt.text(bar.get_width() - bar.get_width() * 0.5, bar.get_y() + bar.get_height()/2, f'{bar.get_width()}', ha='right', va='right', color='white')
     
     plt.savefig('static/bar_chart.png')
     plt.close()
